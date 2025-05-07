@@ -103,7 +103,7 @@ int main() {
         cout << "\nC /= 2:\n" << C;
 
         C %= A;
-        cout << "\nC %= A (element-wise mul):\n" << C;
+        cout << "\nC %= A:\n" << C;
 
         C %= 3;
         cout << "\nC %= 3:\n" << C;
