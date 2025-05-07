@@ -65,48 +65,48 @@ int main() {
         cout << (A ^ 2) << endl;
      
         C = A; // copy assignment operator
-        cout << "\nC = A:\n" << C;
-        cout << "C++:\n" << C++;
-        cout << "C now is:\n" << C;
-        cout << "--C:\n" << --C;
+        cout << "\nC = A:" << C;
+        cout << "\nC++:" << C++;
+        cout << "\nC now is:" << C;
+        cout << "\n--C:" << --C;
 
         // Transpose
-        cout << "Transpose of A:\n" << ~A;
+        cout << "\nTranspose of A:" << ~A;
 
         // השוואות
         cout << boolalpha;
-        cout << "A == B? " << (A == B) << endl;
-        cout << "A != B? " << (A != B) << endl;
-        cout << "A > B? " << (A > B) << endl;
-        cout << "A < B? " << (A < B) << endl;
-        cout << "A <= B? " << (A <= B) << endl;
-        cout << "A >= B? " << (A >= B) << endl;
+        cout << "\nA == B? " << (A == B) << endl;
+        cout << "\nA != B? " << (A != B) << endl;
+        cout << "\nA > B? " << (A > B) << endl;
+        cout << "\nA < B? " << (A < B) << endl;
+        cout << "\nA <= B? " << (A <= B) << endl;
+        cout << "\nA >= B? " << (A >= B) << endl;
 
         // Determinant
-        cout << "Determinant of A: " << !A << endl;
+        cout << "\nDeterminant of A: " << !A << endl;
 
         // השמה משולבת
         C = A;
         C += B;
-        cout << "C += B:\n" << C;
+        cout << "\nC += B:\n" << C;
 
         C -= B;
-        cout << "C -= B:\n" << C;
+        cout << "\nC -= B:\n" << C;
 
         C *= A;
-        cout << "C *= A:\n" << C;
+        cout << "\nC *= A:\n" << C;
 
         C *= 2;
-        cout << "C *= 2:\n" << C;
+        cout << "\nC *= 2:\n" << C;
 
         C /= 2;
-        cout << "C /= 2:\n" << C;
+        cout << "\nC /= 2:\n" << C;
 
         C %= A;
-        cout << "C %= A (element-wise mul):\n" << C;
+        cout << "\nC %= A (element-wise mul):\n" << C;
 
         C %= 3;
-        cout << "C %= 3:\n" << C;
+        cout << "\nC %= 3:\n" << C;
 
     } catch (const exception& e) {
         cerr << "Error: " << e.what() << endl;
