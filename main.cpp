@@ -5,13 +5,13 @@ using namespace matrix;
 
 int main() {
     try {
-        // יצירת מטריצות
+        // New Mat
         SquareMat A(3);       
         SquareMat B(3, 3);      
         SquareMat C(3);         
         A = 2;
         
-        // שינוי איברים ספציפיים
+        // Access
         A[0][0] = 1;
         A[1][1] = 2;
         A[2][2] = 3;
@@ -65,6 +65,7 @@ int main() {
         cout << (A ^ 2) << endl;
      
         C = A; // copy assignment operator
+        // Increment & Decrement
         cout << "\nC = A:" << C;
         cout << "\nC++:" << C++;
         cout << "\nC now is:" << C;
@@ -73,7 +74,7 @@ int main() {
         // Transpose
         cout << "\nTranspose of A:" << ~A;
 
-        // השוואות
+        // Comparison
         cout << boolalpha;
         cout << "\nA == B? " << (A == B) << endl;
         cout << "\nA != B? " << (A != B) << endl;
@@ -85,7 +86,7 @@ int main() {
         // Determinant
         cout << "\nDeterminant of A: " << !A << endl;
 
-        // השמה משולבת
+        // Compound assignment
         C = A;
         C += B;
         cout << "\nC += B:\n" << C;
