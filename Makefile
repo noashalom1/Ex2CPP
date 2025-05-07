@@ -1,3 +1,4 @@
+#noapatito123@gmail.com
 # Source and header files
 SRC = SquareMat.cpp
 HDR = SquareMat.hpp
