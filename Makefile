@@ -18,6 +18,7 @@ CXXFLAGS = -Wall -Wextra -std=c++17
 # ===========================
 Main: $(SRC) $(MAIN)
 	$(CXX) $(CXXFLAGS) -o $(MAIN_EXE) $(SRC) $(MAIN)
+	./$(MAIN_EXE)
 
 # ===========================
 # Build and run unit tests using doctest

@@ -19,7 +19,7 @@ private:
 public:
     // Constructors
     SquareMat(int size);                       // Default constructor
-    explicit SquareMat(int size, double scalar);        // Fill with scalar
+    explicit SquareMat(int size, double scalar); // Fill with scalar
     SquareMat(const SquareMat& other);         // Copy constructor
     ~SquareMat();                              // Destructor
 
