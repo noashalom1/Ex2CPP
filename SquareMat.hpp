@@ -12,9 +12,6 @@ private:
     int size;
     double** data;
 
-    void alloc();
-    void dealloc();
-    void copyFrom(const SquareMat& other);
     double getSum() const;
 
 public:

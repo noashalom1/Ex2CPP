@@ -226,6 +226,50 @@ TEST_CASE("Multiplying by identity matrix") {
     CHECK(B[1][1] == 5);
 }
 
+TEST_CASE("Determinant requires row swap") {
+    SquareMat mat(3, 0.0);
+    // מטריצה עם אפס באלכסון הראשי בשורה 0,
+    // אבל ניתן להחליף עם שורה מתחת
+    mat[0][0] = 0.0;
+    mat[0][1] = 2.0;
+    mat[1][0] = 1.0;
+    mat[1][1] = 3.0;
+    mat[2][2] = 1.0;
+
+    // נדרש חילוף שורות כדי לחשב דטרמיננטה תקפה
+    CHECK(!mat != doctest::Approx(0.0));
+}
+
+TEST_CASE("Determinant returns 0 when no row swap possible") {
+    SquareMat mat(2, 0.0);
+    // כל העמודה הראשונה מלאה אפסים → אי אפשר להחליף שורות
+    mat[0][0] = 0.0;
+    mat[0][1] = 2.0;
+    mat[1][0] = 0.0;
+    mat[1][1] = 3.0;
+
+    CHECK(!mat == doctest::Approx(0.0));
+}
+
+TEST_CASE("Print operator<< outputs matrix correctly") {
+    SquareMat mat(2);
+    mat[0][0] = 1.5;
+    mat[0][1] = 2.0;
+    mat[1][0] = 3.5;
+    mat[1][1] = 4.0;
+
+    std::ostringstream oss;
+    oss << mat;
+
+    std::string expected = "1.5 2 \n3.5 4 \n";
+    CHECK(oss.str() == expected);
+}
+
+TEST_CASE("getSize returns correct value") {
+    SquareMat mat(4);
+    CHECK(mat.getSize() == 4);
+}
+
 
 
 

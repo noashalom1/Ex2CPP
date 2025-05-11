@@ -30,54 +30,56 @@ int main() {
         cout << (A + B) << endl;
 
         // subtraction
-        cout << "\n=== Subtraction: B - A ===" << endl;
+        cout << "=== Subtraction: B - A ===" << endl;
         cout << (B - A) << endl;
 
         // Matrix Multiplication
-        cout << "\n=== Matrix Multiplication: A * B ===" << endl;
+        cout << "=== Matrix Multiplication: A * B ===" << endl;
         cout << (A * B) << endl;
 
         // Scalar Multiplication: Matrix*Scalar
-        cout << "\n=== Matrix*Scalar: A * 2 ===" << endl;
+        cout << "=== Matrix*Scalar: A * 2 ===" << endl;
         cout << (A * 2) << endl;
         
         // Scalar Multiplication: Scalar*Matrix
-        cout << "\n=== Scalar*Matrix: 3 * A ===" << endl;
+        cout << "=== Scalar*Matrix: 3 * A ===" << endl;
         cout << (3 * A) << endl;
        
         // Matrix Element-wise Modulo Operation
-        cout << "\n=== Matrix Element-wise Modulo Operation: A % B ===" << endl;
+        cout << "=== Matrix Element-wise Modulo Operation: A % B ===" << endl;
         cout << (A % B) << endl;
     
         // Scalar Modulo
-        cout << "\n=== Scalar Modulo: B % 2 ===" << endl;
+        cout << "=== Scalar Modulo: B % 2 ===" << endl;
         cout << (B % 2) << endl;
 
         // Scalar Division 
-        cout << "\n=== Scalar Division: B / 2 ===" << endl;
+        cout << "=== Scalar Division: B / 2 ===" << endl;
         cout << (B / 2) << endl;
     
         // Unary Minus
-        cout << "\n=== Unary Minus: -A ===" << endl;
+        cout << "=== Unary Minus: -A ===" << endl;
         cout << (-A) << endl;
 
         // Power Operator 
-        cout << "\n=== Power Operator: A ^ 2 ===" << endl;
+        cout << "=== Power Operator: A ^ 2 ===" << endl;
         cout << (A ^ 2) << endl;
      
-        C = A; // copy assignment operator
         // Increment & Decrement
-        cout << "\nC = A:" << C;
-        cout << "\nC++:" << C++;
-        cout << "\nC now is:" << C;
-        cout << "\n--C:" << --C;
+        cout << "=== Increment & Decrement ===" << endl;
+        C = A; // copy assignment operator
+        cout << "C = A:\n" << C;
+        cout << "\nC++:\n" << C++;
+        cout << "\nC now is:\n" << C;
+        cout << "\n--C:\n" << --C;
 
         // Transpose
-        cout << "\nTranspose of A:" << ~A;
+        cout << "\n=== Transpose of A: ===\n" << ~A;
 
         // Comparison
+        cout << "\n=== Comparison ===" << endl;
         cout << boolalpha;
-        cout << "\nA == B? " << (A == B) << endl;
+        cout << "A == B? " << (A == B) << endl;
         cout << "\nA != B? " << (A != B) << endl;
         cout << "\nA > B? " << (A > B) << endl;
         cout << "\nA < B? " << (A < B) << endl;
@@ -85,12 +87,12 @@ int main() {
         cout << "\nA >= B? " << (A >= B) << endl;
 
         // Determinant
-        cout << "\nDeterminant of A: " << !A << endl;
+        cout << "\n=== Determinant of A: ===\n" << !A << endl;
 
         // Compound assignment
-        C = A;
+        cout << "\n=== Compound Assignment ===" << endl;
         C += B;
-        cout << "\nC += B:\n" << C;
+        cout << "C += B:\n" << C;
 
         C -= B;
         cout << "\nC -= B:\n" << C;

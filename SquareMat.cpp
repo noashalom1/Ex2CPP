@@ -9,29 +9,6 @@ namespace matrix{
 //     PRIVATE FUNCTIONS
 // ==========================
 
-void SquareMat::alloc() {
-    data = new double*[size];
-    for (int i = 0; i < size; ++i) {
-        data[i] = new double[size];
-        for (int j = 0; j < size; ++j)
-            data[i][j] = 0.0;
-    }
-}
-
-void SquareMat::dealloc() {
-    for (int i = 0; i < size; ++i)
-        delete[] data[i];
-    delete[] data;
-}
-
-void SquareMat::copyFrom(const SquareMat& other) {
-    size = other.size;
-    alloc();
-    for (int i = 0; i < size; ++i)
-        for (int j = 0; j < size; ++j)
-            data[i][j] = other.data[i][j];
-}
-
 double SquareMat::getSum() const {
     double sum = 0.0;
     for (int i = 0; i < size; ++i)
@@ -47,20 +24,34 @@ double SquareMat::getSum() const {
 SquareMat::SquareMat(int size) : SquareMat(size, 0.0){}
 
 SquareMat::SquareMat(int size, double scalar) : size(size) {
-    if (size <= 0)
-        throw std::invalid_argument("Matrix size must be positive.");
-    alloc();
-    for (int i = 0; i < size; ++i)
-        for (int j = 0; j < size; ++j)
-            data[i][j] = scalar;
+    if (size <= 0) throw std::invalid_argument("Invalid matrix size.");
+    data = new double *[size];
+        for (int i = 0; i < size; ++i)
+        {
+            data[i] = new double[size];
+            for (int j = 0; j < size; ++j)
+            {
+                data[i][j] = scalar; // קובע את כל הערכים להיות הסקלר
+            }
+        }    
 }
 
-SquareMat::SquareMat(const SquareMat& other) {
-    copyFrom(other);
+SquareMat::SquareMat(const SquareMat& other) : size(other.size), data(new double *[other.size]) {
+    for (int i = 0; i < size; ++i)
+    {
+        data[i] = new double[size]; // allocate new row
+        for (int j = 0; j < size; ++j)
+        {
+            data[i][j] = other.data[i][j]; // copy value
+        }
+    }
 }
 
 SquareMat::~SquareMat() {
-    dealloc();
+    if (!data) return;
+    for (int i = 0; i < size; ++i)
+        delete[] data[i];
+    delete[] data;
 }
 
 // ==========================
@@ -83,10 +74,11 @@ const double* SquareMat::operator[](int i) const {
 
 SquareMat& SquareMat::operator=(const SquareMat& other) {
     if (this != &other) {
-        dealloc();
-        copyFrom(other);
-    }
-    return *this;
+            SquareMat temp(other);
+            std::swap(size, temp.size);
+            std::swap(data, temp.data);
+        }
+        return *this;
 }
 
 SquareMat& SquareMat::operator=(double scalar) {
@@ -158,7 +150,7 @@ SquareMat SquareMat::operator%(const SquareMat& other) const {
 }
 
 SquareMat SquareMat::operator%(int scalar) const {
-    if (scalar == 0)
+    if (std::abs(scalar) < 1e-9)
         throw std::invalid_argument("Modulo by zero.");
     SquareMat res(size);
     for (int i = 0; i < size; ++i)
@@ -168,7 +160,7 @@ SquareMat SquareMat::operator%(int scalar) const {
 }
 
 SquareMat SquareMat::operator/(double scalar) const {
-    if (scalar == 0.0)
+    if (std::abs(scalar) < 1e-9)
         throw std::invalid_argument("Division by zero.");
     SquareMat res(size);
     for (int i = 0; i < size; ++i)
@@ -285,6 +277,7 @@ bool SquareMat::operator>=(const SquareMat& other) const {
 // ==========================
 
 double SquareMat::operator!() const {
+    const double EPSILON = 1e-9;
     if (size == 1)
         return data[0][0];
 
@@ -292,10 +285,10 @@ double SquareMat::operator!() const {
     SquareMat temp(*this);
 
     for (int i = 0; i < size; ++i) {
-        if (temp.data[i][i] == 0.0) {
+        if (std::abs(temp.data[i][i]) < EPSILON) {
             bool found = false;
             for (int j = i + 1; j < size; ++j) {
-                if (temp.data[j][i] != 0.0) {
+                if (temp.data[j][i] > EPSILON) {
                     std::swap(temp.data[i], temp.data[j]);
                     det *= -1;
                     found = true;
