@@ -288,7 +288,7 @@ double SquareMat::operator!() const {
         if (std::abs(temp.data[i][i]) < EPSILON) {
             bool found = false;
             for (int j = i + 1; j < size; ++j) {
-                if (temp.data[j][i] < EPSILON) {
+                if (temp.data[j][i] > EPSILON) {
                     std::swap(temp.data[i], temp.data[j]); // swap rows
                     det *= -1; // account for row swap
                     found = true;
