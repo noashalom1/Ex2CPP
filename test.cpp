@@ -5,7 +5,7 @@
 
 using namespace matrix;
 
-TEST_CASE("Matrix creation and indexing") {
+TEST_CASE("Matrix creation and indexing") { // test constructor with scalar and direct element access
     SquareMat mat(2, 5);
     CHECK(mat[0][0] == 5);
     CHECK(mat[1][1] == 5);
@@ -13,7 +13,7 @@ TEST_CASE("Matrix creation and indexing") {
     CHECK(mat[0][1] == 3);
 }
 
-TEST_CASE("Matrix addition and subtraction") {
+TEST_CASE("Matrix addition and subtraction") { // test A + B and B - A for element-wise operations
     SquareMat A(2, 2);
     SquareMat B(2, 3);
     SquareMat C = A + B;
@@ -23,7 +23,7 @@ TEST_CASE("Matrix addition and subtraction") {
     CHECK(C[0][0] == 1);
 }
 
-TEST_CASE("Matrix scalar multiplication and division") {
+TEST_CASE("Matrix scalar multiplication and division") { // test scalar multiplication and division
     SquareMat A(2, 2);
     SquareMat B = A * 3;
     CHECK(B[0][0] == 6);
@@ -33,7 +33,7 @@ TEST_CASE("Matrix scalar multiplication and division") {
     CHECK(C[1][0] == 2);
 }
 
-TEST_CASE("Unary minus and increment/decrement") {
+TEST_CASE("Unary minus and increment/decrement") { // test -A, ++A, A++, --A, A--
     SquareMat A(2);
     A[0][0] = 1;
     A[1][1] = -2;
@@ -52,7 +52,7 @@ TEST_CASE("Unary minus and increment/decrement") {
     CHECK(A[0][0] == 1);
 }
 
-TEST_CASE("Matrix multiplication and power") {
+TEST_CASE("Matrix multiplication and power") { // test A * A and A ^ n
     SquareMat I(2);
     I[0][0] = 1;
     I[1][1] = 1;
@@ -61,7 +61,7 @@ TEST_CASE("Matrix multiplication and power") {
     CHECK(M[1][1] == 1);
 }
 
-TEST_CASE("Comparison operators") {
+TEST_CASE("Comparison operators") { // test ==, !=, <, <=, >, >
     SquareMat A(2, 2);
     SquareMat B(2, 3);
     CHECK((A == A) == true);
@@ -72,7 +72,7 @@ TEST_CASE("Comparison operators") {
     CHECK((B >= A) == true);
 }
 
-TEST_CASE("Element-wise modulo and scalar modulo") {
+TEST_CASE("Element-wise modulo and scalar modulo") { // test A % B and A % scalar
     SquareMat A(2);
     A[0][0] = 5;
     A[1][1] = 4;
@@ -85,7 +85,7 @@ TEST_CASE("Element-wise modulo and scalar modulo") {
     CHECK(D[0][0] == 2); // 5 % 3
 }
 
-TEST_CASE("Compound assignment operators") {
+TEST_CASE("Compound assignment operators") { // test A += B, A -= B, A *= B, etc.
     SquareMat A(2, 1);
     SquareMat B(2, 2);
 
@@ -112,7 +112,7 @@ TEST_CASE("Compound assignment operators") {
     CHECK(A[0][0] == 2);
 }
 
-TEST_CASE("Transpose") {
+TEST_CASE("Transpose") { // test ~A
     SquareMat A(2);
     A[0][1] = 7;
     SquareMat B = ~A;
@@ -120,7 +120,7 @@ TEST_CASE("Transpose") {
     CHECK(B[0][1] == 0);
 }
 
-TEST_CASE("Determinant") {
+TEST_CASE("Determinant") { // test determinant (!A)
     SquareMat A(2);
     A[0][0] = 4;
     A[0][1] = 2;
@@ -129,7 +129,7 @@ TEST_CASE("Determinant") {
     CHECK((!A) == doctest::Approx(-2));
 }
 
-TEST_CASE("Copy constructor and assignment") {
+TEST_CASE("Copy constructor and assignment") { // test copy constructor and operator=
     SquareMat A(2, 5);
     SquareMat B = A;  // Copy constructor
     CHECK(B[0][0] == 5);
@@ -141,49 +141,49 @@ TEST_CASE("Copy constructor and assignment") {
     CHECK(C[1][1] == 5);
 }
 
-TEST_CASE("Exception: invalid matrix size") {
+TEST_CASE("Exception: invalid matrix size") { // test invalid sizes
     CHECK_THROWS_AS(SquareMat(0), std::invalid_argument);
     CHECK_THROWS_AS(SquareMat(-3), std::invalid_argument);
 }
 
-TEST_CASE("Exception: out-of-bounds access") {
+TEST_CASE("Exception: out-of-bounds access") { // test invalid row access
     SquareMat A(2);
     CHECK_THROWS_AS({ (void)A[-1][0]; }, std::out_of_range);
     CHECK_THROWS_AS({ (void)A[2][1]; }, std::out_of_range);
 }
 
-TEST_CASE("Exception: addition/subtraction with different sizes") {
+TEST_CASE("Exception: addition/subtraction with different sizes") { // test A + B, A - B where sizes mismatch
     SquareMat A(2);
     SquareMat B(3);
     CHECK_THROWS_AS(A + B, std::invalid_argument);
     CHECK_THROWS_AS(A - B, std::invalid_argument);
 }
 
-TEST_CASE("Exception: multiplication with different sizes") {
+TEST_CASE("Exception: multiplication with different sizes") { // test A * B with size mismatch
     SquareMat A(2);
     SquareMat B(3);
     CHECK_THROWS_AS(A * B, std::invalid_argument);
 }
 
-TEST_CASE("Exception: modulo with different sizes or zero scalar") {
+TEST_CASE("Exception: modulo with different sizes or zero scalar") { // test A % B (bad sizes) and A % 0
     SquareMat A(2);
     SquareMat B(3);
     CHECK_THROWS_AS(A % B, std::invalid_argument);
     CHECK_THROWS_AS(A % 0, std::invalid_argument);
 }
 
-TEST_CASE("Exception: division by zero") {
+TEST_CASE("Exception: division by zero") { // test A / 0
     SquareMat A(2, 5);
     CHECK_THROWS_AS(A / 0.0, std::invalid_argument);
     CHECK_THROWS_AS(A /= 0.0, std::invalid_argument);
 }
 
-TEST_CASE("Exception: negative power") {
+TEST_CASE("Exception: negative power") { // test A ^ -1
     SquareMat A(2);
     CHECK_THROWS_AS(A ^ -1, std::invalid_argument);
 }
 
-TEST_CASE("1x1 Matrix behavior") {
+TEST_CASE("1x1 Matrix behavior") { // test single element matrix behavior
     SquareMat A(1, 5);
     CHECK(A[0][0] == 5);
     CHECK((!A) == 5);
@@ -191,26 +191,26 @@ TEST_CASE("1x1 Matrix behavior") {
     CHECK(B[0][0] == 125);
 }
 
-TEST_CASE("Self-assignment") {
+TEST_CASE("Self-assignment") { // test A = A
     SquareMat A(2, 3);
     A = A;
     CHECK(A[0][0] == 3);
 }
 
-TEST_CASE("Scalar assignment") {
+TEST_CASE("Scalar assignment") { // test A = scalar
     SquareMat A(2, 1);
     A = 7;
     CHECK(A[1][1] == 7);
 }
 
-TEST_CASE("Double transpose") {
+TEST_CASE("Double transpose") { // test ~~A == A
     SquareMat A(2);
     A[0][1] = 9;
     SquareMat B = ~~A;
     CHECK(B[0][1] == 9);
 }
 
-TEST_CASE("Multiplying by identity matrix") {
+TEST_CASE("Multiplying by identity matrix") { // test A * I = A
     SquareMat I(2);
     I[0][0] = 1;
     I[1][1] = 1;
@@ -226,32 +226,26 @@ TEST_CASE("Multiplying by identity matrix") {
     CHECK(B[1][1] == 5);
 }
 
-TEST_CASE("Determinant requires row swap") {
+TEST_CASE("Determinant requires row swap") { // test !A with pivot = 0 requiring row swap
     SquareMat mat(3, 0.0);
-    // מטריצה עם אפס באלכסון הראשי בשורה 0,
-    // אבל ניתן להחליף עם שורה מתחת
     mat[0][0] = 0.0;
     mat[0][1] = 2.0;
     mat[1][0] = 1.0;
     mat[1][1] = 3.0;
     mat[2][2] = 1.0;
-
-    // נדרש חילוף שורות כדי לחשב דטרמיננטה תקפה
     CHECK(!mat != doctest::Approx(0.0));
 }
 
-TEST_CASE("Determinant returns 0 when no row swap possible") {
+TEST_CASE("Determinant returns 0 when no row swap possible") { // test !A returns 0 if column is all zero
     SquareMat mat(2, 0.0);
-    // כל העמודה הראשונה מלאה אפסים → אי אפשר להחליף שורות
     mat[0][0] = 0.0;
     mat[0][1] = 2.0;
     mat[1][0] = 0.0;
     mat[1][1] = 3.0;
-
     CHECK(!mat == doctest::Approx(0.0));
 }
 
-TEST_CASE("Print operator<< outputs matrix correctly") {
+TEST_CASE("Print operator<< outputs matrix correctly") { // test string output of matrix
     SquareMat mat(2);
     mat[0][0] = 1.5;
     mat[0][1] = 2.0;
@@ -265,7 +259,7 @@ TEST_CASE("Print operator<< outputs matrix correctly") {
     CHECK(oss.str() == expected);
 }
 
-TEST_CASE("getSize returns correct value") {
+TEST_CASE("getSize returns correct value") { // test getSize()
     SquareMat mat(4);
     CHECK(mat.getSize() == 4);
 }
