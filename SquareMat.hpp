@@ -13,6 +13,7 @@ private:
     double** data;
 
     double getSum() const; // helper function to calculate the sum of all elements
+    int getSize() const; // getter for size  
 
 public:
     // Constructors 
@@ -78,8 +79,6 @@ public:
 
     // Output  
     friend std::ostream& operator<<(std::ostream& os, const SquareMat& mat); // stream output of matrix  
-
-    int getSize() const; // getter for size  
 };
 
 } // namespace matrix

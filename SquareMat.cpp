@@ -17,6 +17,10 @@ double SquareMat::getSum() const {
     return sum;
 }
 
+int SquareMat::getSize() const {
+    return size; // return matrix size
+}
+
 // ==========================
 //     CONSTRUCTORS
 // ==========================
@@ -361,10 +365,5 @@ std::ostream& operator<<(std::ostream& os, const SquareMat& mat) {
     }
     return os;
 }
-
-int SquareMat::getSize() const {
-    return size; // return matrix size
-}
-
 } // namespace matrix
 
