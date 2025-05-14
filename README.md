@@ -1,5 +1,10 @@
 # Ex2CPP - SquareMat Project
 
+##Author
+
+Noa Patito 
+Email: noapatito123@gmail.com
+
 ## Overview
 
 This project provides a C++ implementation of a dynamic square matrix class `SquareMat` with a set of arithmetic, comparison, and utility operators.  
