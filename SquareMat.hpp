@@ -7,6 +7,8 @@
 
 namespace matrix {
 
+class TestHelper;
+
 class SquareMat {
 private:
     int size;
@@ -14,6 +16,7 @@ private:
 
     double getSum() const; // helper function to calculate the sum of all elements
     int getSize() const; // getter for size  
+    friend class TestHelper; // declare test helper as friend
 
 public:
     // Constructors 

@@ -5,6 +5,29 @@
 
 using namespace matrix;
 
+namespace matrix {
+
+class TestHelper { // TestHelper has access now because it's a friend
+public:
+    static double callGetSum(const SquareMat& mat) {
+        return mat.getSum();
+    }
+    static int callGetSize(const SquareMat& mat) {
+        return mat.getSize();
+    }
+
+ };
+
+TEST_CASE("Test private getSum using friend helper") { // test for private getSum
+    SquareMat mat(2, 3);
+    CHECK(TestHelper::callGetSum(mat) == 12);
+ }
+
+ TEST_CASE("Test private getSize using friend helper") { // test for private getSize
+    SquareMat mat(2, 3);
+    CHECK(TestHelper::callGetSize(mat) == 2);
+ }
+
 TEST_CASE("Matrix creation and indexing") { // test constructor with scalar and direct element access
     SquareMat mat(2, 5);
     CHECK(mat[0][0] == 5);
@@ -259,10 +282,8 @@ TEST_CASE("Print operator<< outputs matrix correctly") { // test string output o
     CHECK(oss.str() == expected);
 }
 
-TEST_CASE("getSize returns correct value") { // test getSize()
-    SquareMat mat(4);
-    CHECK(mat.getSize() == 4);
-}
+} // namespace matrix
+    
 
 
 
