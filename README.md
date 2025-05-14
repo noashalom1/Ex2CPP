@@ -1,6 +1,6 @@
 # Ex2CPP - SquareMat Project
 
-##Author
+## Author
 
 Noa Patito 
 Email: noapatito123@gmail.com
