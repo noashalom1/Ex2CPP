@@ -12,22 +12,13 @@ public:
     static double callGetSum(const SquareMat& mat) {
         return mat.getSum();
     }
-    static int callGetSize(const SquareMat& mat) {
-        return mat.getSize();
-    }
-
- };
+};
 
 TEST_CASE("Test private getSum using friend helper") { // test for private getSum
     SquareMat mat(2, 3);
     CHECK(TestHelper::callGetSum(mat) == 12);
  }
-
- TEST_CASE("Test private getSize using friend helper") { // test for private getSize
-    SquareMat mat(2, 3);
-    CHECK(TestHelper::callGetSize(mat) == 2);
- }
-
+ 
 TEST_CASE("Matrix creation and indexing") { // test constructor with scalar and direct element access
     SquareMat mat(2, 5);
     CHECK(mat[0][0] == 5);

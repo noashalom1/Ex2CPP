@@ -6,10 +6,10 @@ using namespace matrix;
 namespace matrix{
 
 // ==========================
-//     PRIVATE FUNCTIONS
+//     PRIVATE FUNCTION
 // ==========================
 
-double SquareMat::getSum() const {
+double SquareMat::getSum() const { // getSum for Comparison operator
     double sum = 0.0;
     for (int i = 0; i < size; ++i)
         for (int j = 0; j < size; ++j)
@@ -17,17 +17,13 @@ double SquareMat::getSum() const {
     return sum;
 }
 
-int SquareMat::getSize() const {
-    return size; // return matrix size
-}
-
 // ==========================
 //     CONSTRUCTORS
 // ==========================
 
-SquareMat::SquareMat(int size) : SquareMat(size, 0.0){} // delegate to scalar constructor
+SquareMat::SquareMat(int size) : SquareMat(size, 0.0){} // Delegate to scalar constructor
 
-SquareMat::SquareMat(int size, double scalar) : size(size) {
+SquareMat::SquareMat(int size, double scalar) : size(size) { // Fill with scalar
     if (size <= 0) throw std::invalid_argument("Invalid matrix size.");
     data = new double *[size]; // allocate rows
         for (int i = 0; i < size; ++i)
@@ -40,7 +36,7 @@ SquareMat::SquareMat(int size, double scalar) : size(size) {
         }    
 }
 
-SquareMat::SquareMat(const SquareMat& other) : size(other.size), data(new double *[other.size]) {
+SquareMat::SquareMat(const SquareMat& other) : size(other.size), data(new double *[other.size]) { // Copy constructor
     for (int i = 0; i < size; ++i)
     {
         data[i] = new double[size]; // allocate new row
@@ -51,7 +47,7 @@ SquareMat::SquareMat(const SquareMat& other) : size(other.size), data(new double
     }
 }
 
-SquareMat::~SquareMat() {
+SquareMat::~SquareMat() { // Destructor
     if (!data) return; // nothing to delete
     for (int i = 0; i < size; ++i) 
         delete[] data[i]; // delete each row
@@ -62,12 +58,12 @@ SquareMat::~SquareMat() {
 //     ACCESS
 // ==========================
 
-double* SquareMat::operator[](int i) {
+double* SquareMat::operator[](int i) { // Allows write access to row i
     if (i < 0 || i >= size) throw std::out_of_range("Invalid row index.");
     return data[i]; // return pointer to row
 }
 
-const double* SquareMat::operator[](int i) const {
+const double* SquareMat::operator[](int i) const { // Allows read-only access to row i
     if (i < 0 || i >= size) throw std::out_of_range("Invalid row index.");
     return data[i]; // return const pointer to row
 }
@@ -76,7 +72,7 @@ const double* SquareMat::operator[](int i) const {
 //     ASSIGNMENT
 // ==========================
 
-SquareMat& SquareMat::operator=(const SquareMat& other) {
+SquareMat& SquareMat::operator=(const SquareMat& other) { // Copy assignment 
     if (this != &other) {
             SquareMat temp(other); // copy first
             std::swap(size, temp.size); // swap internals
@@ -85,7 +81,7 @@ SquareMat& SquareMat::operator=(const SquareMat& other) {
         return *this;
 }
 
-SquareMat& SquareMat::operator=(double scalar) {
+SquareMat& SquareMat::operator=(double scalar) { // Assigns scalar value to all elements
     for (int i = 0; i < size; ++i)
         for (int j = 0; j < size; ++j)
             data[i][j] = scalar; // assign scalar to each element
@@ -96,7 +92,7 @@ SquareMat& SquareMat::operator=(double scalar) {
 //     ARITHMETIC
 // ==========================
 
-SquareMat SquareMat::operator+(const SquareMat& other) const {
+SquareMat SquareMat::operator+(const SquareMat& other) const { // Matrix addition
     if (size != other.size)
         throw std::invalid_argument("Matrix sizes do not match for addition.");
     SquareMat res(size);
@@ -106,7 +102,7 @@ SquareMat SquareMat::operator+(const SquareMat& other) const {
     return res;
 }
 
-SquareMat SquareMat::operator-(const SquareMat& other) const {
+SquareMat SquareMat::operator-(const SquareMat& other) const { // Matrix subtraction 
     if (size != other.size)
         throw std::invalid_argument("Matrix sizes do not match for subtraction.");
     SquareMat res(size);
@@ -116,7 +112,7 @@ SquareMat SquareMat::operator-(const SquareMat& other) const {
     return res;
 }
 
-SquareMat SquareMat::operator*(const SquareMat& other) const {
+SquareMat SquareMat::operator*(const SquareMat& other) const { // Matrix multiplication
     if (size != other.size)
         throw std::invalid_argument("Matrix sizes do not match for multiplication.");
     SquareMat res(size);
@@ -127,23 +123,20 @@ SquareMat SquareMat::operator*(const SquareMat& other) const {
     return res;
 }
 
-SquareMat SquareMat::operator*(double scalar) const {
-    SquareMat res(size);
+SquareMat operator*(const SquareMat& mat, double scalar) { // Matrix * Scalar
+    int size = mat.size;
+    SquareMat res(size); 
     for (int i = 0; i < size; ++i)
         for (int j = 0; j < size; ++j)
-            res[i][j] = data[i][j] * scalar; // scalar multiplication
+            res[i][j] = mat[i][j] * scalar; // scalar multiplication
     return res;
 }
 
-SquareMat operator*(double scalar, const SquareMat& mat) {
+SquareMat operator*(double scalar, const SquareMat& mat) { // Scalar * Matrix 
     return mat * scalar; // commutative scalar multiplication
 }
 
-// =======================================
-//     MODULO, MULTIPLICATION, DIVISION
-// =======================================
-
-SquareMat SquareMat::operator%(const SquareMat& other) const {
+SquareMat SquareMat::operator%(const SquareMat& other) const { // Element-wise multiplication
     if (size != other.size)
         throw std::invalid_argument("Matrix sizes do not match for element-wise multiplication.");
     SquareMat res(size);
@@ -153,7 +146,7 @@ SquareMat SquareMat::operator%(const SquareMat& other) const {
     return res;
 }
 
-SquareMat SquareMat::operator%(int scalar) const {
+SquareMat SquareMat::operator%(int scalar) const { // Modulo operation on each element 
     if (std::abs(scalar) < 1e-9)
         throw std::invalid_argument("Modulo by zero.");
     SquareMat res(size);
@@ -163,7 +156,7 @@ SquareMat SquareMat::operator%(int scalar) const {
     return res;
 }
 
-SquareMat SquareMat::operator/(double scalar) const {
+SquareMat SquareMat::operator/(double scalar) const { // Scalar division
     if (std::abs(scalar) < 1e-9)
         throw std::invalid_argument("Division by zero.");
     SquareMat res(size);
@@ -173,11 +166,7 @@ SquareMat SquareMat::operator/(double scalar) const {
     return res;
 }
 
-// ===========================
-//     UNARY MINUS OPERATOR
-// ===========================
-
-SquareMat SquareMat::operator-() const {
+SquareMat SquareMat::operator-() const { // Unary minus 
     SquareMat res(size);
     for (int i = 0; i < size; ++i)
         for (int j = 0; j < size; ++j)
@@ -185,11 +174,7 @@ SquareMat SquareMat::operator-() const {
     return res;
 }
 
-// ===========================
-//     POWER OPERATOR
-// ===========================
-
-SquareMat SquareMat::operator^(int power) const {
+SquareMat SquareMat::operator^(int power) const { // Power operator
     if (power < 0)
         throw std::invalid_argument("Negative exponent not supported.");
     SquareMat res(size, 0); // start with identity matrix
@@ -210,27 +195,27 @@ SquareMat SquareMat::operator^(int power) const {
 //     INCREMENT / DECREMENT
 // ==========================
 
-SquareMat& SquareMat::operator++() {
+SquareMat& SquareMat::operator++() { // prefix increment: ++mat  
     for (int i = 0; i < size; ++i)
         for (int j = 0; j < size; ++j)
             ++data[i][j]; // pre-increment each element
     return *this;
 }
 
-SquareMat SquareMat::operator++(int) {
+SquareMat SquareMat::operator++(int) { // postfix increment: mat++  
     SquareMat tmp(*this);
     ++(*this); // post-increment
     return tmp;
 }
 
-SquareMat& SquareMat::operator--() {
+SquareMat& SquareMat::operator--() { // prefix decrement: --mat  
     for (int i = 0; i < size; ++i)
         for (int j = 0; j < size; ++j)
             --data[i][j]; // pre-decrement each element
     return *this;
 }
 
-SquareMat SquareMat::operator--(int) {
+SquareMat SquareMat::operator--(int) { // postfix decrement: mat--  
     SquareMat tmp(*this);
     --(*this); // post-decrement
     return tmp;
@@ -248,12 +233,12 @@ SquareMat SquareMat::operator~() const {
     return res;
 }
 
-// ==========================
-//     COMPARISON OPERATORS
-// ==========================
+// ========================================
+//     COMPARISON OPERATORS - compare sums
+// ========================================
 
 bool SquareMat::operator==(const SquareMat& other) const {
-    return getSum() == other.getSum(); // compare sums
+    return getSum() == other.getSum(); 
 }
 
 bool SquareMat::operator!=(const SquareMat& other) const {
@@ -357,8 +342,8 @@ SquareMat& SquareMat::operator%=(int scalar) {
 // ==========================
 
 std::ostream& operator<<(std::ostream& os, const SquareMat& mat) {
-    for (int i = 0; i < mat.getSize(); ++i) {
-        for (int j = 0; j < mat.getSize(); ++j) {
+    for (int i = 0; i < mat.size; ++i) {
+        for (int j = 0; j < mat.size; ++j) {
             os << mat[i][j] << " "; // print each element
         }
         os << "\n"; // new line after row

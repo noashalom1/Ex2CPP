@@ -15,7 +15,6 @@ private:
     double** data;
 
     double getSum() const; // helper function to calculate the sum of all elements
-    int getSize() const; // getter for size  
     friend class TestHelper; // declare test helper as friend
 
 public:
@@ -25,7 +24,7 @@ public:
     SquareMat(const SquareMat& other); // Copy constructor
     ~SquareMat(); // Destructor
 
-    // Access operators  
+    // Access operator
     double* operator[](int i); // allows write access to row i  
     const double* operator[](int i) const; // allows read-only access to row i  
 
@@ -37,19 +36,16 @@ public:
     SquareMat operator+(const SquareMat& other) const; // matrix addition  
     SquareMat operator-(const SquareMat& other) const; // matrix subtraction  
     SquareMat operator*(const SquareMat& other) const; // matrix multiplication  
-    SquareMat operator*(double scalar) const; // scalar multiplication  
-    friend SquareMat operator*(double scalar, const SquareMat& mat); // scalar * matrix (commutative form)  
+    friend SquareMat operator*(const SquareMat& mat, double scalar); // Matrix * scalar 
+    friend SquareMat operator*(double scalar, const SquareMat& mat); // scalar * matrix 
 
-    // Modulo, Multiplication and Division operators
     SquareMat operator%(const SquareMat& other) const; // element-wise multiplication (Hadamard product)  
     SquareMat operator%(int scalar) const; // modulo operation on each element  
     SquareMat operator/(double scalar) const; // scalar division  
     
-    // Unary minus operator
-    SquareMat operator-() const; 
+    SquareMat operator-() const; // Unary minus operator
 
-    // Power operator
-    SquareMat operator^(int power) const; // matrix raised to integer power  
+    SquareMat operator^(int power) const; // Power - matrix raised to integer power  
 
     // Increment and Decrement operators
     SquareMat& operator++(); // prefix increment: ++mat  
